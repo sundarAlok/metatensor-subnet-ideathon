@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MetaTensor – Bittensor Governance Optimizer</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+
+<style>
+.tab-content { display:none; }
+.tab-content.active { display:block; }
+.tab-btn.active { background:rgba(59,130,246,0.3); border-color:#60a5fa; }
+</style>
+</head>
+
+<body class="bg-gradient-to-br from-gray-900 via-purple-900 to-black text-white min-h-screen">
+
+<!-- NAVIGATION -->
+<nav class="bg-gray-900 border-b border-purple-500/30 sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+<div class="flex items-center space-x-3">
+<img src="assets/logo.png" alt="Logo" class="w-10 h-10 rounded-lg bg-white p-1">
+<h1 class="text-3xl font-bold bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
+MetaTensor
+</h1>
+</div>
+
+<div class="flex space-x-2">
+<button onclick="showTab('idea')" class="tab-btn px-4 py-2 border border-transparent rounded-lg hover:bg-blue-500/20">Idea</button>
+<button onclick="showTab('flow')" class="tab-btn px-4 py-2 border border-transparent rounded-lg hover:bg-green-500/20">Flowchart</button>
+</div>
+
+</div>
+</nav>
+
+<main class="max-w-6xl mx-auto px-6 py-16">
+
+<!-- IDEA TAB -->
+<div id="idea-tab" class="tab-content active">
+
+<h1 class="text-5xl font-extrabold mb-4 text-center bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">MetaTensor Proposal</h1>
+<p class="text-xl text-center text-pink-200 mb-12">Bittensor Governance & Efficiency Optimizer Subnet</p>
+
+<h2 class="text-2xl font-bold mt-10 mb-4">0. Executive Summary</h2>
+<p class="mb-4">
+MetaTensor is a Bittensor subnet whose primary "user" is the Bittensor protocol and ecosystem itself. 
+It continuously analyzes on-chain, network, and subnet-level data to produce governance-grade insights and recommendations: 
+which subnets are healthy or risky, how emissions could be better allocated, 
+where collusion or centralization might be emerging, 
+and what parameter changes would most improve efficiency and decentralization.
+</p>
+<p class="mb-4">
+Miners build analytical and predictive models over Bittensor and external blockchain data, 
+while validators curate tasks, score models, 
+and expose a stable API of recommendations and alerts to governance actors, explorers, and tooling. 
+The subnet's design turns long-term network health into a measurable "digital commodity" 
+that can be rewarded automatically through TAO emissions.
+</p>
+
+<hr class="my-10 border-purple-500/30">
+
+<h2 class="text-2xl font-bold mt-10 mb-4">1. Subnet Overview</h2>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">1.1 Vision</h3>
+<p class="mb-4">
+<strong>Vision:</strong><br>
+Make Bittensor the most transparent, data-driven, and self-optimizing AI network 
+by providing a continuous stream of objective, AI-generated intelligence 
+about its own health, efficiency, and risks.
+</p>
+<p class="mb-4">
+<strong>Tagline:</strong><br>
+"MetaTensor – the brain that helps Bittensor govern and optimize itself."
+</p>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">1.2 Core Idea and Digital Commodity</h3>
+<p class="mb-4">
+Bittensor is composed of many independent subnets that each produce a digital commodity 
+(AI inference, training, financial signals, etc.), 
+with miners producing and validators evaluating the commodity. 
+Emissions of TAO are distributed across subnets and participants based on perceived value.
+</p>
+<p class="mb-4 font-semibold">MetaTensor's digital commodity includes:</p>
+<ul class="list-disc ml-6 space-y-2">
+<li><strong>Network health scores</strong> for subnets, validators, and miners (performance, decentralization, collusion risk).</li>
+<li><strong>Emission and parameter tuning recommendations</strong> (e.g., which subnets should receive more or less emission, which are candidates for retirement or expansion).</li>
+<li><strong>Risk and anomaly alerts</strong> (e.g., sudden stake concentration, suspicious validator clusters, weird emission patterns).</li>
+<li><strong>Comparative metrics</strong> vs other chains (e.g., Ethereum) on decentralization and efficiency.</li>
+</ul>
+<p class="mt-6">
+These outputs are consumed by:
+</p>
+<ul class="list-disc ml-6 space-y-2">
+<li>Bittensor governance participants (TAO voters, councils, core teams).</li>
+<li>Explorers and analytics dashboards.</li>
+<li>Bots or off-chain services that automate some governance or monitoring tasks.</li>
+</ul>
+<p class="mt-6">
+The subnet does <strong>not</strong> directly change L1 code or consensus. 
+Instead, it produces high-quality, constantly updated information and recommendations 
+that governance and tooling can choose to adopt.
+</p>
+
+<hr class="my-10 border-purple-500/30">
+
+<h2 class="text-2xl font-bold mt-10 mb-4">2. Incentive & Mechanism Design</h2>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">2.1 Design Goals</h3>
+<p class="mb-4">The mechanism design aims to:</p>
+<ul class="list-disc ml-6 space-y-2">
+<li>Reward miners who provide accurate, timely, and useful analyses and predictions about the network.</li>
+<li>Reward validators who design robust evaluation tasks and maintain honest, high-availability infrastructure.</li>
+<li>Discourage low-effort, copy-paste, or adversarial behavior.</li>
+<li>Ensure that to earn rewards, miners must perform non-trivial analysis over rich data – a genuine proof of intelligence/effort.</li>
+</ul>
+
+<h3 class="text-xl font-semibold mt-8 mb-3">2.2 Emission and Reward Logic</h3>
+<p class="mb-4">
+Let E<sub>t</sub> be the TAO emitted to MetaTensor during epoch t. 
+In line with the general Bittensor subnet pattern, this emission is split between miners and validators.
+</p>
+<ul class="list-disc ml-6 space-y-2">
+<li><strong>Miner share:</strong> αE<sub>t</sub>, e.g. α = 0.75 (75% of emission).</li>
+<li><strong>Validator share:</strong> (1 - α)E<sub>t</sub>, e.g. 25%.</li>
+</ul>
+
+<h4 class="text-lg font-semibold mt-4 mb-3">2.2.1 Miner Reward Allocation</h4>
+<p class="mb-4">
+Each epoch, validators compute a normalized performance score s<sub>i</sub> ∈ [0,1] for each miner i. 
+This score reflects:
+</p>
+<ul class="list-disc ml-6 space-y-2">
+<li>Accuracy of predictions and risk scores relative to later outcomes.</li>
+<li>Usefulness and originality of recommendations (measured indirectly by agreement with other strong miners, and success on special "insight" tasks).</li>
+<li>Stability and coverage across multiple task types.</li>
+</ul>
+<p class="mb-4">
+Rewards are distributed using a softmax-style weighting over scores:<br>
+w<sub>i</sub> = exp(βs<sub>i</sub>) / Σ<sub>j</sub> exp(βs<sub>j</sub>)<br>
+R<sub>i</sub> = w<sub>i</sub> · αE<sub>t</sub>
+</p>
+<p class="mb-4">
+Where β > 0 controls how sharply rewards focus on top performers 
+(higher β → more competitive, winner-takes-most dynamics). 
+Miners with very low scores (below a threshold τ) can be zeroed out.
+</p>
+
+<h4 class="text-lg font-semibold mt-4 mb-3">2.2.2 Validator Reward Allocation</h4>
+<p class="mb-4">
+Validators receive rewards based on:
+</p>
+<ul class="list-disc ml-6 space-y-2">
+<li><strong>Scoring quality:</strong> how consistent their scores are with the median across validators (low variance and no systematic bias).</li>
+<li><strong>Task quality:</strong> diversity and difficulty of tasks they generate (covering different subnets, time scales, and risk types).</li>
+<li><strong>Service quality:</strong> uptime, latency, and API reliability for serving MetaTensor outputs to external users.</li>
+</ul>
+
+<h3 class="text-xl font-semibold mt-8 mb-3">2.3 Mechanisms to Discourage Low-Quality or Adversarial Behavior</h3>
+<ol class="list-decimal ml-6 space-y-3">
+<li><strong>Score thresholds and baselines:</strong> Validators maintain baseline models/heuristics as a minimal standard. Miners whose performance does not significantly improve on baselines receive zero or negligible rewards.</li>
+<li><strong>Sentinel tasks:</strong> Validators inject special hidden-label tasks that test for trivial or plagiarized behavior. Miners repeatedly failing sentinel tasks can be flagged and excluded.</li>
+<li><strong>Cross-validator consensus checks:</strong> For each miner and task, compare scores across validators. Large systematic deviations can indicate a malicious or colluding validator.</li>
+<li><strong>Time-based performance windows:</strong> Use rolling windows (e.g., last 30 epochs) to smooth one-off lucky predictions. This makes consistent quality more important than intermittent spikes.</li>
+</ol>
+
+<h3 class="text-xl font-semibold mt-8 mb-3">2.4 Proof of Intelligence / Effort</h3>
+<p class="mb-4">
+MetaTensor qualifies as proof of intelligence/effort because:
+</p>
+<ul class="list-disc ml-6 space-y-2">
+<li>Tasks require modeling complex, multi-variable time series (emissions, stake flows, subnet performance), graph structures (stake & validator relationships), and game-theoretic behaviors.</li>
+<li>Miners must detect subtle patterns and anomalies (such as emerging cartels, parameter inefficiencies, or subnets whose emission does not match their value).</li>
+<li>Ground truths (e.g., eventual failures, slashing, delistings, or realized performance metrics) are hidden or delayed; naive heuristics cannot consistently perform well.</li>
+</ul>
+
+<hr class="my-10 border-purple-500/30">
+
+<h2 class="text-2xl font-bold mt-10 mb-4">3. High-Level Algorithm (Task → Reward)</h2>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">3.1 Task Lifecycle</h3>
+<ol class="list-decimal ml-6 space-y-3">
+<li><strong>Data ingestion:</strong> Validators and some miners ingest network data (on-chain events, subnet metrics, external blockchain data).</li>
+<li><strong>Task generation (validators):</strong> Validators formulate evaluation tasks grouped into categories: Health scoring, Emission optimization, Anomaly/collusion detection, Comparative benchmarking.</li>
+<li><strong>Task broadcast:</strong> Validators publish tasks to miners via the standard subnet protocol.</li>
+<li><strong>Miner inference:</strong> Miners receive tasks, run their models, and submit structured responses.</li>
+<li><strong>Scoring (validators):</strong> For tasks with delayed ground truth, validators maintain a score buffer. For tasks with synthetic ground truth, score directly.</li>
+<li><strong>Score aggregation and consensus:</strong> Validators aggregate task-level scores into per-miner scores using normalized metrics and robust statistics.</li>
+<li><strong>Reward computation:</strong> Apply the emission formula to compute miner and validator rewards.</li>
+<li><strong>Publication & API:</strong> Validators publish MetaTensor outputs via public API endpoints, explorers, dashboards, and governance reports.</li>
+</ol>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">3.2 Flow Description</h3>
+<p class="mb-4">
+The flow follows this sequence:
+</p>
+<ol class="list-decimal ml-6 space-y-2">
+<li>Bittensor Network Data → MetaTensor Validators (Task Generator)</li>
+<li>Validators → Miners (Tasks in JSON format)</li>
+<li>Miners → Validators (Predictions & Recommendations)</li>
+<li>Validators → Subtensor (Scores → TAO Rewards)</li>
+<li>Validators → Governance & Dashboards (Health Scores, Alerts, Recommendations)</li>
+</ol>
+
+<hr class="my-10 border-purple-500/30">
+
+<h2 class="text-2xl font-bold mt-10 mb-4">4. Miner Design</h2>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">4.1 Miner Tasks</h3>
+<p class="mb-4">MetaTensor miners are specialized analysts/agents. They cover several task families:</p>
+
+<h4 class="text-lg font-semibold mt-4 mb-3">1. Subnet Health Scoring</h4>
+<ul class="list-disc ml-6 space-y-2">
+<li>Input: historical metrics for each subnet (emission share, usage, staking patterns, validator diversity, age, performance proxies)</li>
+<li>Output: Risk score for each subnet (0-1), Category labels (e.g., "emerging, stable, over-rewarded, under-rewarded, at-risk")</li>
+</ul>
+
+<h4 class="text-lg font-semibold mt-4 mb-3">2. Emission Optimization Proposals</h4>
+<ul class="list-disc ml-6 space-y-2">
+<li>Input: entire subnet set with health scores and performance metrics</li>
+<li>Output: Suggested relative emission weights per subnet, explanation of major changes</li>
+</ul>
+
+<h4 class="text-lg font-semibold mt-4 mb-3">3. Collusion & Centralization Detection</h4>
+<ul class="list-disc ml-6 space-y-2">
+<li>Input: stake distribution, ownership clustering, behavior similarity between validators/miners</li>
+<li>Output: Flags for suspected collusion clusters, centralization metrics</li>
+</ul>
+
+<h4 class="text-lg font-semibold mt-4 mb-3">4. Comparative Chain Metrics</h4>
+<ul class="list-disc ml-6 space-y-2">
+<li>Input: Bittensor network data plus external chain data</li>
+<li>Output: Relative ranking on decentralization, liveness, censorship resistance, and utilization</li>
+</ul>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">4.2 Input and Output Formats</h3>
+<p class="mb-4">
+Tasks and responses use JSON format. Example for subnet health scoring:
+</p>
+<pre class="bg-gray-800 p-4 rounded-lg overflow-x-auto text-sm mb-4"><code>{
+  "task_type": "subnet_health_scoring",
+  "epoch_window": "2026-01-01_to_2026-02-01",
+  "subnets": [{"id": 31, "age_epochs": 1234, "emission_share": 0.015, ...}]
+}</code></pre>
+<p class="mb-4">Miner response:</p>
+<pre class="bg-gray-800 p-4 rounded-lg overflow-x-auto text-sm mb-4"><code>{
+  "epoch_window": "2026-01-01_to_2026-02-01",
+  "subnet_scores": [{"id": 31, "risk_score": 0.18, "category": "under_rewarded", ...}],
+  "model_version": "metaminer_v1.3"
+}</code></pre>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">4.3 Performance Dimensions</h3>
+
+<p class="mb-4">The performance of a MetaTensor miner's analytical agent is evaluated across several key dimensions, which collectively determine its overall score and ranking within the subnet.</p>
+
+<table class="w-full mb-6 text-sm border-collapse">
+<thead>
+<tr class="border-b border-purple-500/30">
+<th class="text-left py-3 px-4"><strong>Performance Dimension</strong></th>
+<th class="text-left py-3 px-4"><strong>Description</strong></th>
+<th class="text-left py-3 px-4"><strong>How It Is Measured</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-gray-800">
+<td class="py-3 px-4"><strong>Prediction Accuracy</strong></td>
+<td class="py-3 px-4">The miner's ability to correctly predict subnet health risks, emission efficiency, and detect emerging problems before they become obvious. This is the primary measure of success.</td>
+<td class="py-3 px-4"><strong>Backtested AUC/ROC</strong> over 30-day rolling windows: correlation between predicted risk scores and actual outcomes (deregistrations, performance drops, governance flags). Higher AUC = better foresight.</td>
+</tr>
+<tr class="border-b border-gray-800">
+<td class="py-3 px-4"><strong>Recommendation Quality</strong></td>
+<td class="py-3 px-4">The miner's ability to propose emission weight adjustments and parameter changes that would genuinely improve network efficiency if adopted.</td>
+<td class="py-3 px-4"><strong>Simulated utility gain</strong>: Run miner's proposed emission weights through a network simulator vs current weights. Score = % improvement in decentralization + total value captured by high-performing subnets.</td>
+</tr>
+<tr class="border-b border-gray-800">
+<td class="py-3 px-4"><strong>Anomaly Detection</strong></td>
+<td class="py-3 px-4">The miner's ability to identify collusion, centralization risks, and unusual stake/emission patterns early.</td>
+<td class="py-3 px-4"><strong>Precision/Recall on sentinel tasks</strong>: Validators inject synthetic anomalies (fake stake concentration, validator cartels). Miners scored on detection rate vs false positives. F1-score used.</td>
+</tr>
+<tr class="border-b border-gray-800">
+<td class="py-3 px-4"><strong>Robustness</strong></td>
+<td class="py-3 px-4">The miner's consistency across different network conditions, subnet types, and time horizons (short-term vs long-term predictions).</td>
+<td class="py-3 px-4"><strong>Variance penalty</strong>: Coefficient of variation across 100+ subnets and 7-day rolling performance. Lower variance = more reliable across market conditions.</td>
+</tr>
+<tr class="border-b border-gray-800">
+<td class="py-3 px-4"><strong>Timeliness</strong></td>
+<td class="py-3 px-4">The miner's ability to react quickly to sudden network changes (new subnets, stake shifts, emission anomalies).</td>
+<td class="py-3 px-4"><strong>Response latency</strong> (seconds from task broadcast to submission) + <strong>adaptation speed</strong> (performance recovery after injecting network shocks). Weighted 20% of total score.</td>
+</tr>
+<tr class="border-b border-gray-800">
+<td class="py-3 px-4"><strong>Explainability</strong></td>
+<td class="py-3 px-4">The quality and usefulness of the miner's rationales and feature importance for human governance actors.</td>
+<td class="py-3 px-4"><strong>Human-curated bonus</strong>: Top 10% miners get +5% score boost if their JSON justifications are selected for governance dashboards (validator committee vote).</td>
+</tr>
+</tbody>
+</table>
+
+<h4 class="text-lg font-semibold mt-6 mb-3">Scoring Formula</h4>
+<pre class="bg-gray-800 p-4 rounded-lg overflow-x-auto text-sm mb-4"><code>Final Score (s_i) = 0.50 × Accuracy + 0.25 × Recommendation Quality + 
+                   0.15 × Anomaly Detection + 0.08 × Robustness + 
+                   0.02 × Timeliness + 0.00 × Explainability (bonus)</code></pre>
+
+<p class="mb-4"><strong>Ultimately, the goal for a miner is to maximize Prediction Accuracy within the given constraints.</strong> The softmax reward model concentrates emissions on miners who demonstrate genuine analytical intelligence - not just surface-level statistics, but deep understanding of Bittensor's complex game-theoretic dynamics.</p>
+
+<p class="mb-4">Miners must continuously adapt to:</p>
+<ul class="list-disc ml-6 space-y-2">
+<li>New subnets appearing/deregistering</li>
+<li>Evolving validator strategies</li>
+<li>Governance parameter changes</li>
+<li>External market conditions affecting stake flows</li>
+</ul>
+
+<p class="mt-6"><strong>This creates true "proof of intelligence"</strong> - trivial heuristics (moving averages, simple thresholds) cannot consistently beat sophisticated miners who model the full network state, stake graphs, and game-theoretic incentives.</p>
+
+<hr class="my-10 border-purple-500/30">
+
+<h2 class="text-2xl font-bold mt-10 mb-4">5. Validator Design</h2>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">5.1 Validator Responsibilities</h3>
+<p class="mb-4">Validators in MetaTensor:</p>
+<ul class="list-disc ml-6 space-y-2">
+<li>Ingest and preprocess the relevant network data for task generation</li>
+<li>Construct evaluation tasks with clear formats and hidden ground truths</li>
+<li>Distribute tasks, collect responses, and compute scores</li>
+<li>Combine scores across validators to form global miner rankings</li>
+<li>Expose a stable external API with aggregated MetaTensor outputs</li>
+</ul>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">5.2 Scoring and Evaluation Methodology</h3>
+
+<h4 class="text-lg font-semibold mt-4 mb-3">5.2.1 Accuracy Scoring</h4>
+<ul class="list-disc ml-6 space-y-2">
+<li><strong>Subnet health predictions:</strong> Track events like deregistration, performance degradation. Score based on AUC/ROC, rank correlation.</li>
+<li><strong>Emission optimization:</strong> Use simulation/backtesting to score how well proposed adjustments would have performed.</li>
+<li><strong>Anomaly detection:</strong> Inject synthetic anomalies as sentinel tasks and evaluate detection rates.</li>
+</ul>
+
+<h4 class="text-lg font-semibold mt-4 mb-3">5.2.2 Aggregation and Normalization</h4>
+<p class="mb-4">
+Validators normalize scores into 0-1 range per task type and compute weighted aggregate:<br>
+s<sub>i</sub> = Σ<sub>k</sub> γ<sub>k</sub> s<sub>i,k</sub>
+</p>
+<p class="mb-4">
+Validators share per-miner scores, and global aggregation (median or robust mean) produces final s<sub>i</sub> for rewards.
+</p>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">5.3 Evaluation Cadence</h3>
+<ul class="list-disc ml-6 space-y-2">
+<li><strong>Micro-cycles (intra-epoch):</strong> Tasks generated continuously; provisional scores updated frequently</li>
+<li><strong>Epoch cycles:</strong> At each emission epoch, scores over sliding window are finalized</li>
+<li><strong>Long-window backtesting:</strong> Over 30-90 days, validators run explicit backtests to refine scoring weights</li>
+</ul>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">5.4 Validator Incentive Alignment</h3>
+<p class="mb-4">Validator rewards incentivize:</p>
+<ul class="list-disc ml-6 space-y-2">
+<li>Honest scoring (agreement with peers)</li>
+<li>Challenging, diverse tasks</li>
+<li>High uptime and reliable API service</li>
+</ul>
+
+<hr class="my-10 border-purple-500/30">
+
+<h2 class="text-2xl font-bold mt-10 mb-4">6. Business Logic & Market Rationale</h2>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">6.1 Problem Statement</h3>
+<p class="mb-4">
+As Bittensor's subnet ecosystem grows (AI training, inference, DeFi, security, etc.), 
+it becomes increasingly difficult for governance participants to evaluate which subnets add value, 
+for stakers to understand where to allocate capital, 
+and for core devs to decide on parameter changes in a data-driven way.
+</p>
+<p class="mb-4">
+Existing analytics are fragmented across explorers, community dashboards, and ad-hoc scripts. 
+No single subsystem provides a continuous, AI-driven "control panel" for the whole network.
+</p>
+<p class="mb-4">
+MetaTensor addresses this by making network health and optimization itself 
+into a first-class digital commodity with clear economic incentives.
+</p>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">6.2 Competing Solutions</h3>
+<p class="mb-4"><strong>Inside Bittensor:</strong></p>
+<ul class="list-disc ml-6 space-y-2">
+<li>Subnet registries and explorers show lists and basic stats</li>
+<li>Some subnets focus on financial/trading signals or infrastructure, but none has governance/optimization as primary goal</li>
+</ul>
+<p class="mb-4"><strong>Outside Bittensor:</strong></p>
+<ul class="list-disc ml-6 space-y-2">
+<li>Ethereum relies on manual research by analytics firms</li>
+<li>Dashboards (Dune, Nansen, Glassnode) provide metrics but no protocol-level incentive alignment</li>
+</ul>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">6.3 Why This Use Case Fits Bittensor</h3>
+<ul class="list-disc ml-6 space-y-2">
+<li>Bittensor is built as a marketplace where AI subnets produce useful digital commodities</li>
+<li>Governance and network health information is a perfect candidate: measurable, validatable over time, critical to protocol success</li>
+<li>The miner/validator split maps naturally to analytics: miners compute metrics, validators check and curate them</li>
+</ul>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">6.4 Long-term Adoption and Sustainable Business</h3>
+<p class="mb-4"><strong>Value creation:</strong></p>
+<ul class="list-disc ml-6 space-y-2">
+<li>For governance: Better visibility and early warning on risks</li>
+<li>For stakers/investors: Clearer understanding of healthy vs risky subnets</li>
+<li>For tooling providers: Explorers/wallets can integrate MetaTensor scores</li>
+</ul>
+<p class="mb-4"><strong>Revenue and sustainability:</strong></p>
+<ul class="list-disc ml-6 space-y-2">
+<li>TAO emissions bootstrap the subnet</li>
+<li>Can charge partners/enterprise users micro-fees for advanced analytics APIs</li>
+<li>Governance could allocate protocol budgets to ensure continuation</li>
+</ul>
+
+<hr class="my-10 border-purple-500/30">
+
+<h2 class="text-2xl font-bold mt-10 mb-4">7. Go-to-Market Strategy</h2>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">7.1 Initial Target Users and Use Cases</h3>
+<ol class="list-decimal ml-6 space-y-2">
+<li><strong>Bittensor governance actors:</strong> Core devs, council members, large TAO holders</li>
+<li><strong>Explorers and dashboards:</strong> Bittensor block explorers wanting richer insights</li>
+<li><strong>Stakers, delegators, subnet teams:</strong> Use scores to understand perception</li>
+</ol>
+<p class="mb-4 mt-4"><strong>Initial focus use cases:</strong></p>
+<ul class="list-disc ml-6 space-y-2">
+<li>Network health dashboard</li>
+<li>Governance recommendation feed</li>
+</ul>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">7.2 Distribution and Growth Channels</h3>
+<ul class="list-disc ml-6 space-y-2">
+<li><strong>Developer-friendly APIs:</strong> Public REST/gRPC endpoints for health scores, emission suggestions, alerts</li>
+<li><strong>Integration with existing tools:</strong> Work with explorers, wallets to integrate signals</li>
+<li><strong>Community engagement:</strong> Publish "MetaTensor State of the Network" reports, run open challenges</li>
+</ul>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">7.3 Incentives for Early Participation</h3>
+<ul class="list-disc ml-6 space-y-2">
+<li><strong>Miners:</strong> Temporarily higher miner share α and/or early bonuses, public leaderboards</li>
+<li><strong>Validators:</strong> Early validator bonuses for bootstrapping infrastructure</li>
+<li><strong>Tooling partners:</strong> Free/discounted access for integrating and promoting</li>
+</ul>
+
+<hr class="my-10 border-purple-500/30">
+
+<h2 class="text-2xl font-bold mt-10 mb-4">8. Architecture Diagrams and Flows</h2>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">8.1 High-Level Architecture</h3>
+<p class="mb-4"><strong>Layer 1: Bittensor & External Chains</strong></p>
+<ul class="list-disc ml-6 space-y-1">
+<li>Subtensor (L1), Subnets & Actors, Ethereum / Other Chains</li>
+<li>Data flows: On-chain data, telemetry, metrics</li>
+</ul>
+<p class="mb-4 mt-4"><strong>Layer 2: MetaTensor Validators</strong></p>
+<ul class="list-disc ml-6 space-y-1">
+<li>Data Ingestion & Preprocessing → Task Generator → Scoring Engine → API Gateway</li>
+</ul>
+<p class="mb-4 mt-4"><strong>Layer 3: MetaTensor Miners</strong></p>
+<ul class="list-disc ml-6 space-y-1">
+<li>Miner Models (Risk, Emission, Anomaly Detectors, Chain Comparators)</li>
+</ul>
+<p class="mb-4 mt-4"><strong>Layer 4: Consumers</strong></p>
+<ul class="list-disc ml-6 space-y-1">
+<li>Governance & Councils, Explorers & Wallets, Research & Analytics Firms</li>
+</ul>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">8.2 Detailed Task Flow</h3>
+<ol class="list-decimal ml-6 space-y-2">
+<li>Start: New Epoch t</li>
+<li>Validators ingest network data</li>
+<li>Build tasks (Yes/No) → Create health/emission/anomaly tasks → Broadcast to miners</li>
+<li>Miners compute predictions & recommendations</li>
+<li>Validators receive and validate responses</li>
+<li>Compute task-level scores</li>
+<li>Aggregate per-miner scores</li>
+<li>Compute TAO rewards via emission logic</li>
+<li>Two branches: Send rewards (on-chain), Publish scores via API/dashboard</li>
+<li>End: Epoch t complete</li>
+</ol>
+
+<hr class="my-10 border-purple-500/30">
+
+<h2 class="text-2xl font-bold mt-10 mb-4">9. Extra Sections to Strengthen the Proposal</h2>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">9.1 Security, Privacy, and Attack Considerations</h3>
+<ul class="list-disc ml-6 space-y-2">
+<li><strong>Data privacy:</strong> Most data is on-chain and public; off-chain telemetry can be anonymized</li>
+<li><strong>Adversarial miners:</strong> Mitigated via sentinel tasks with synthetic patterns, measuring diversity across miners</li>
+<li><strong>Adversarial validators:</strong> Mitigated via cross-validator consistency checks and score aggregation</li>
+</ul>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">9.2 Governance Integration</h3>
+<p class="mb-4">
+MetaTensor outputs are <em>recommendations</em>: they do not automatically change emission weights or protocol parameters. 
+Governance processes can choose whether and how to adopt them.
+</p>
+<ul class="list-disc ml-6 space-y-2">
+<li>Propose "MetaTensor signal" field for governance proposals</li>
+<li>Governance tooling that displays MetaTensor insights when inspecting subnets/proposals</li>
+</ul>
+
+<h3 class="text-xl font-semibold mt-6 mb-3">9.3 Implementation Roadmap</h3>
+<ol class="list-decimal ml-6 space-y-2">
+<li><strong>Phase 0 (Ideathon):</strong> Finalize design and mechanism spec, create mock dashboards and diagrams</li>
+<li><strong>Phase 1 (Hackathon – Bittensor testnet):</strong> Implement minimal MetaTensor subnet with simplified data pipeline, one or two task types, basic scoring</li>
+<li><strong>Phase 2 (Early mainnet prototype):</strong> Expand data coverage, introduce advanced miners, build public explorer web app</li>
+<li><strong>Phase 3 (Governance integration & ecosystem partnerships):</strong> Collaborate with explorers, wallets, governance tools, run community campaigns</li>
+</ol>
+
+</div>
+
+<!-- FLOW TAB -->
+<div id="flow-tab" class="tab-content">
+<h1 class="text-4xl font-bold mb-10 text-center">Task and Reward Flow</h1>
+
+<h2 class="text-2xl font-bold mt-8 mb-4">Miners Design Workflow</h2>
+<img src="assets/miner-design-workflow.png" alt="Miners Design Workflow" class="w-full max-w-4xl mx-auto mb-8 rounded-lg border border-purple-500/30">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">Validators Design Workflow</h2>
+<img src="assets/validator-design-workflow.png" alt="Validators Design Workflow" class="w-full max-w-4xl mx-auto mb-8 rounded-lg border border-purple-500/30">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">Architecture Overview</h2>
+<img src="assets/architecture-overview.png" alt="Architecture Overview" class="w-full max-w-4xl mx-auto mb-8 rounded-lg border border-purple-500/30">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">Evaluation Workflow</h2>
+<img src="assets/evalution-workflow.png" alt="Evaluation Workflow" class="w-full max-w-4xl mx-auto mb-8 rounded-lg border border-purple-500/30">
+
+</div>
+
+</main>
+
+<script>
+function showTab(name){
+document.querySelectorAll('.tab-content').forEach(tab=>tab.classList.remove('active'));
+document.querySelectorAll('.tab-btn').forEach(btn=>btn.classList.remove('active'));
+document.getElementById(name+'-tab').classList.add('active');
+event.target.classList.add('active');
+}
+document.querySelector('.tab-btn').classList.add('active');
+</script>
+
+</body>
+</html>
